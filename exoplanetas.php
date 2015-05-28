@@ -1,9 +1,10 @@
 <?php
-//Este script de PHP crea planetas para agregarlos a Celestia utilizando la base de datos de exoplanetas
+//Este script de PHP crea planetas para agregarlos a Celestia utilizando la base de datos de exoplanets.eu
 //Necesitas descargar el catálogo de exoplanetas desde exoplanet.eu
-//Luego importa la bases de datos en un servidor como xampp
+//Luego importa la bases de datos en un servidor como xampp (phpmyadmin)
+//Renombra la columna "dec" como "deg"
 //Abre el script en un navegador web y se creará el archivo
-//Mueve el archivo a la carpetas extras dentro de la carpeta de instalación de php
+//Mueve el archivo a la carpeta extras dentro de la carpeta de instalación de Celestia
 $link = mysql_connect("localhost", "root", "");
 mysql_select_db("exoplanetas", $link);
  
