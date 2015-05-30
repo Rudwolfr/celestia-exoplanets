@@ -41,11 +41,22 @@ while($row=mysql_fetch_array($result))
     }
     
     fputs($ar, "\n");
-    fputs($ar, "Elliptical Orbit");
+    fputs($ar, "EllipticalOrbit");
     fputs($ar, "{\n");
-    fputs($ar, "SemiMajorAxis ");
+    
+    if(!empty($row["orbital_period"])) {
+    	$PeriodoDia = $row["orbital_period"];
+    	$PeriodoAnyo = $PeriodoDia/365.256363004;
+    	fputs($ar, "Period ");
+    	fputs($ar, $PeriodoAnyo);
+    	fputs($ar,"\n");
+    }
+    
+    if(!empty($row["semi_major_axis"])) {
+    	fputs($ar, "SemiMajorAxis ");
     fputs($ar, $row["semi_major_axis"]);
     fputs($ar, "\n");
+    }
     
     if(!empty($row["eccentricity"])) {
     	fputs($ar, "Eccentricity ");
