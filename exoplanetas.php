@@ -1,14 +1,14 @@
 <?php
 //Este script de PHP crea planetas para agregarlos a Celestia utilizando la base de datos de exoplanets.eu
-//Necesitas descargar el catálogo de exoplanetas desde exoplanet.eu
+//Necesitas descargar el catÃ¡logo de exoplanetas desde exoplanet.eu
 //Luego importa la bases de datos en un servidor como xampp (phpmyadmin)
 //Renombra la columna "dec" como "deg"
-//Abre el script en un navegador web y se creará el archivo
-//Mueve el archivo a la carpeta extras dentro de la carpeta de instalación de Celestia
+//Abre el script en un navegador web y se crearÃ¡ el archivo
+//Mueve el archivo a la carpeta extras dentro de la carpeta de instalaciÃ³n de Celestia
 $link = mysql_connect("localhost", "root", "");
 mysql_select_db("exoplanetas", $link);
  
-$result = mysql_query("SELECT name, radius, orbital_period, semi_major_axis, eccentricity, inclination, omega, tperi, star_name FROM planetas", $link);
+$result = mysql_query("SELECT name, mass, radius, orbital_period, semi_major_axis, eccentricity, inclination, omega, tperi, star_name FROM planetas", $link);
 
 
 if($result === FALSE) {
@@ -29,9 +29,41 @@ while($row=mysql_fetch_array($result))
     fputs($ar, "\"");
     fputs($ar, "\n");
     fputs($ar, "{\n");
-    fputs($ar, "Texture \"exo-class1.*\"");
-    fputs($ar, "\n");
-    
+	
+	if(!empty($row["mass"])) {
+    	$mass = $row["mass"];
+		$PeriodoDia = $row["orbital_period"];
+    	if ($mass > 0.5 and $PeriodoDia <10){
+			fputs($ar, "Texture \"exo-class5.*\"");
+			fputs($ar,"\n");
+			fputs($ar, "NightTexture \"exo-class1night5.*\"");
+    	}
+		
+		elseif ($mass >0.5 and $PeriodoDia >10){ 
+			fputs($ar, "Texture \"exo-class1.*\"");
+			fputs($ar,"\n");
+			fputs($ar, "NightTexture \"exo-class1night.*\"");
+			}
+		
+		elseif ($mass < 0.5 and $PeriodoDia <10){
+			fputs($ar, "Texture \"extrasolar-lok.*\"");
+			fputs($ar,"\n");
+			}
+		
+		elseif ($mass <0.5){ 
+			fputs($ar, "Texture \"exo-class1.*\"");
+			fputs($ar,"\n");
+			fputs($ar, "NightTexture \"exo-class1night.*\"");
+			}
+			else {
+    fputs($ar, "Texture \"venuslike.*\"");
+	fputs($ar,"\n");
+	fputs($ar, "NightTexture \"venuslikenight.*\"");
+}		
+    }
+	fputs($ar, "\n");
+
+	
     if(!empty($row["radius"])) {
     	$radioJ = $row["radius"];
     	$radio = $radioJ * $rjupiter;
@@ -96,5 +128,3 @@ while($row=mysql_fetch_array($result))
     echo "Archivo exoplanetas.ssc creado correctamente";
 fclose($ar);
 ?>
-</body>
-</html>
