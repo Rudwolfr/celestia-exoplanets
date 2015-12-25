@@ -36,7 +36,7 @@ while($row=mysql_fetch_array($result))
     	if ($mass > 0.5 and $PeriodoDia <10){
 			fputs($ar, "Texture \"exo-class5.*\"");
 			fputs($ar,"\n");
-			fputs($ar, "NightTexture \"exo-class1night5.*\"");
+			fputs($ar, "NightTexture \"exo-class5night.*\"");
     	}
 		
 		elseif ($mass >0.5 and $PeriodoDia >10){ 
